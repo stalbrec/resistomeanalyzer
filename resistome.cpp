@@ -69,6 +69,7 @@ void resistome::process_resistome(std::map<std::string, record> &records, const 
 			for(auto header = annot.begin(); header != annot.end(); ++header) {
 				if(header->first == reference_name) {
 					if(rec->second._gene_hits > 0) {
+						type_level[header->second._type_l] += rec->second._gene_hits;
 						class_level[header->second._class_l] += rec->second._gene_hits;
 						mechanism_level[header->second._mechanism_l] += rec->second._gene_hits;
 						group_level[header->second._group_l] += rec->second._gene_hits;
@@ -87,6 +88,14 @@ void resistome::write_gene_level(const int threshold, const std::string &gene_fp
 		if(it->second.coverage() > threshold) {
 			ofs << sample_name << "\t" << it->first << "\t" << it->second._gene_hits << "\t" << it->second.coverage() << std::endl;
 		}
+	}
+}
+
+void resistome::write_type_level(const std::string &type_fp, const std::string &sample_name) {
+	std::ofstream ofs(type_fp);
+	ofs << "Sample\t" << "Type\t" << "Hits\n";
+	for(auto it = type_level.begin(); it != type_level.end(); ++it) {
+		ofs << sample_name << "\t" << it->first << "\t" << it->second << std::endl;
 	}
 }
 
@@ -116,6 +125,7 @@ void resistome::write_group_level(const std::string &group_fp, const std::string
 
 void resistome::write_resistome(cmd_args args, const std::string &sample_name, std::map<std::string, record> &records) {
 	write_gene_level(args.threshold, args.gene_fp, sample_name, records);
+	write_type_level(args.type_fp, sample_name);
 	write_class_level(args.class_fp, sample_name);
 	write_mechanism_level(args.mech_fp, sample_name);
 	write_group_level(args.group_fp, sample_name);
