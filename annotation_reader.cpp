@@ -21,7 +21,7 @@ std::map<std::string, annotation_fields> annotation_reader::read() {
 		getline(ifs, mechanism_l, ',');
 		getline(ifs, group_l, ',');
 		getline(ifs, snp_l);
-		annotations[header] = annotation_fields(class_l, mechanism_l, group_l);
+		annotations[header] = annotation_fields(type_l, class_l, mechanism_l, group_l);
 	}
 
 	return annotations;
