@@ -12,7 +12,7 @@
 using namespace std;
 
 int main(const int argc, const char *argv[]) {
-	if(argc != 17) {
+	if(argc != 19) {
 		usage();
 		exit(EXIT_FAILURE);
 	}
