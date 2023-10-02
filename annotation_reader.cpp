@@ -12,13 +12,15 @@ std::map<std::string, annotation_fields> annotation_reader::read() {
 		exit(EXIT_FAILURE);
 	}
 
-	std::string header, class_l, mechanism_l, group_l;
+	std::string header, type_l, class_l, mechanism_l, group_l, snp_l;
 	std::map<std::string, annotation_fields> annotations;
 	getline(ifs, header);
 	while(getline(ifs, header, ',')) {
+		getline(ifs, type_l, ',');
 		getline(ifs, class_l, ',');
 		getline(ifs, mechanism_l, ',');
-		getline(ifs, group_l);
+		getline(ifs, group_l, ',');
+		getline(ifs, snp_l);
 		annotations[header] = annotation_fields(class_l, mechanism_l, group_l);
 	}
 
